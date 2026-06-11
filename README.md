@@ -17,4 +17,3 @@ A smart attendance management system that leverages facial recognition technolog
 - **AI Models**: CNN-based facial recognition (FaceNet, VGG-Face)
 - **Libraries**: OpenCV, TensorFlow/PyTorch
 
-## 📂 Project Structure
