@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management System</title>
+    <link href="{% static 'Css/Boot_css2.css' %}" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            background: linear-gradient(to bottom right, #1c92d2, #f2fcfe); /* Vibrant gradient */
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: #673ab7; /* Deep purple */
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .navbar a:hover {
+            background-color: #9575cd;
+            color: #fff;
+        }
+
+        /* Admin Section Styling */
+        .admin-header {
+            font-size: 70px;
+            margin-top: 40px;
+            color: #00796b; /* Teal accent */
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .section {
+            padding: 40px;
+            margin: 30px auto;
+            border-radius: 20px;
+            width: 80%;
+            background: linear-gradient(to right, #ff6f61, #ff9966); /* Warm gradient */
+            color: #fff;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        /* Button Styling */
+        .btn-custom {
+            background: linear-gradient(to right, #43cea2, #185a9d); /* Green-blue gradient */
+            font-size: 18px;
+            color: #fff;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+            margin: 10px;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
+            background: linear-gradient(to right, #185a9d, #43cea2);
+        }
+
+        /* Footer Styling */
+        footer {
+            background: #673ab7;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Icon Styling */
+        .icon {
+            font-size: 90px;
+            margin: 20px 0;
+            color: #00796b; /* Teal for icons */
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/Murali/logout">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="text-center">
+        <h1 class="admin-header">ADMIN</h1>
+        <div class="section">
+            <i class="fas fa-user-cog icon"></i> <!-- Admin Icon -->
+            <h3>Welcome Admin Protal Of Institution</h3>
+            <a href="/Murali/display_Staff">
+                <button class="btn btn-custom">STAFF</button>
+            </a>
+            <a href="/Murali/student">
+                <button class="btn btn-custom">STUDENT</button>
+            </a>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %} 
+<html>
+<head>
+<script src="{% static 'Js/Bootstrap_Bundle.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+<link rel="stylesheet" href="{% static 'Css/Data_table.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+  <title></title>
+</head>
+<body>
+  <input type="text" name="attpercentage" id="attpercentage" onblur="myFunction()">
+<table id="eg" >
+<thead>
+<tr>
+<th>User-Name</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Murali</td>
+<td>01</td>
+</tr>
+<tr>
+<td>MK</td>
+<td>02</td>
+</tr>
+<tr>
+<td>Prem</td>
+<td>03</td>
+</tr>
+<tr>
+<td>John</td>
+<td>04</td>
+</tr>
+<tr>
+<td>Ram</td>
+<td>05</td>
+</tr>
+</tbody>
+<tbody id="tbody">
+</tbody>
+</table>
+</body>
+</html>
+<script>
+$(document).ready(function()
+{
+	$("#eg").DataTable();
+});
+
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("attpercentage");
+  //filter = input.value.toUpperCase();
+  attendance = parseFloat(input.value);
+  table = document.getElementById("eg");
+  tr = table.getElementsByTagName("tr");
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 1; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];//table data [1] - column number - starts from 0
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      //if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	if(parseFloat(txtValue)<attendance){
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>

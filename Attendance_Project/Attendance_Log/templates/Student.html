@@ -1,0 +1,331 @@
+<!--Author:Murali-->
+{% load static %} 
+<head>
+<link href="{% static 'Css/Boot_css.css' %}"rel="stylesheet">
+</head>
+<style>
+table, th, td {
+  padding:5px;
+  border: 3px solid black;
+  text-align:center;
+}
+</style>
+<script src="{% static 'Js/Boot_2_js.js' %}"></script>
+<script src="{% static 'Js/Boot_1_js.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+<body >
+  &nbsp; 
+  &nbsp; 
+  &nbsp; 
+  &nbsp; 
+  &nbsp; 
+  &nbsp; 
+  &nbsp; 
+<div class="row">
+  <div class="col">
+<form action="/Murali/display_student" method="POST">{% csrf_token %}
+<center><b><u><h1 style="color:red">Students Details</h1></u></b>
+<table border="1">
+<tr>
+<th>Select The Degree</th>
+<th>Select The Year</th>
+<th>Select The Department</th></tr>
+<tr>
+<td><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"  data-bs-toggle="dropdown" aria-expanded="false">
+    UG/PG
+  </button>
+  <input type="hidden" name="Grad" id="Grad" value="">
+  <ul name="Grad_li" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+    <li class="dropdown-item active">--SELECT--</li>
+    <li id="Grad_li_ug" onclick="Value(this.id)" class="dropdown-item">Under Graduate(UG)</li>
+    <li id="Grad_li_pg" onclick="Value(this.id)" class="dropdown-item">Post Graduate(PG)</li>
+  </ul></td>
+<td> <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Year
+  </button>
+   <input type="hidden" name="Year"  id="Year"value="">
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+    <li  class="dropdown-item active">--SELECT--</li>
+    <li id="Year_li_1" onclick="Value(this.id)" class="dropdown-item">First Year(I)</li>
+    <li id="Year_li_2" onclick="Value(this.id)" 
+    class="dropdown-item">Second Year(II)</li>
+    <li id="Year_li_3" onclick="Value(this.id)" class="dropdown-item">Third Year(III)</li>
+  </ul></td>
+<td><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Departments
+  </button>
+   <input type="hidden" name="Dep" id="Dep" value="">
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+    <li class="dropdown-item active"><a  >--SELECT--</li>
+    <li id="Dep_li_cs" onclick="Value(this.id)" class="dropdown-item">Computer Science</li>
+    <li id="Dep_li_mat" onclick="Value(this.id)"class="dropdown-item">Mathematics</li>
+    <li id="Dep_li_phy" onclick="Value(this.id)" class="dropdown-item">Physics</li>
+    <li id="Dep_li_chem" onclick="Value(this.id)"  class="dropdown-item">Chemistry</li>
+    <li id="Dep_li_eco" onclick="Value(this.id)"  class="dropdown-item">Economics</li>
+  </ul></td>
+  </tr></center>
+</table>
+<br>
+<center><button onclick="Submit()" style="margin-right:50px;margin-top:20px" type="submit" class="btn btn-outline-primary">Submit</button></center>
+</form>
+</div>
+<div class="col">
+<form method="POST" action="/Murali/Attendance_Average" id="Avg_Form">{% csrf_token %}
+<center>
+<b><u><h1 style="color:red">Attendance Details</h1></u></b>
+<table border="1">
+<tr>
+<th>Total Working Days</th>
+<th>Select The Degree</th></tr>
+<tr>
+ <td>
+  <div class="input-group input-group-lg">
+  <input type="text" class="form-control text-center" value="{{Working_Days}}"  name="Avg_Days" value="" id="Avg_Days" readonly style="width: 50px ">
+</div>
+</td>
+<td>
+<select class="form-select form-select-lg mb-3"  name="Avg_Degree" id="Avg_Degree" >
+  <option selected>UG/PG</option>
+  <option value="UG">Under Graduate</option>
+  <option value="PG">Post Graduate</option>
+</select></td></tr>
+</table>
+<button style="margin-right:50px;margin-top:20px" onclick="Validtions()" type="submit" class="btn btn-outline-primary">Attendance Average</button>
+ </center>
+ </form> 
+</div>
+</div>
+<div class="row">
+    <center>
+<b><u><h1 style="color:red">Student's Backup</h1></u></b>
+<h2 style="text-align:left; color:DodgerBlue "><span style='font-size:50px;'>&#xbb;</span><u>Backup Student's Details</u></h2></center>
+  <div class="col">
+<center>
+<table border="1">
+<tr>
+<th>Select The Degree</th>
+<th>Select The Year</th>
+<th>Select The Semester</th>
+</tr>
+<tr>
+<td style="width:215px;">
+<select class="form-select form-select-lg mb-3" onclick="degree()"  name="Degree" id="Degree">
+  <option selected>UG/PG</option>
+  <option value="UG">Under Graduate</option>
+  <option value="PG">Post Graduate</option>
+</select>
+</td>
+  <td style="width:200px;"><select class="form-select form-select-lg mb-3" name="year" id="year" onclick="Semester()">
+        <option selected>Year</option>
+        <option value="I">First Year(I)</option>
+        <option value="II">Second Year(II)</option>
+        <option id="III" value="III">Third Year(III)</option>
+      </select>
+</td>
+<td style="width:170px;">
+  <select class="form-select form-select-lg mb-3" onclick="Year_Upgrade()" name="Sem" id="Sem">
+        <option selected>Semester</option>
+        <option id="Sem_1" value="Sem_1">Sem-1</option>
+        <option id="Sem_2" value="Sem_2">Sem-2</option>
+        <option id="Sem_3" value="Sem_3">Sem-3</option>
+        <option id="Sem_4" value="Sem_4">Sem-4</option>
+        <option id="Sem_5" value="Sem_5">Sem-5</option>
+        <option id="Sem_6" value="Sem_6">Sem-6</option>
+      </select>
+</td>
+</tr>
+</div>
+</table> <h3 id="Backup_Text" style="color:red;"></h3></center>
+<center>
+<input type="button" style="margin-right:50px;margin-top:20px"  class="btn btn-outline-primary" onclick="Backup()" id="Backup_bt" value="Backup">
+</form>
+</div>
+<div class="col">
+<h2 style="text-align:left; color:DodgerBlue ;margin-top:-60px ;"><span style='font-size:50px;'>&#xbb;</span><u>Display Student's Backup</u></h2>
+<form action="/Murali/Display_Backup" method="POST">{% csrf_token %}
+<center><table border="1">
+<th><span style="font-size:25px ;"><b>Degree:</b></span></th>
+<th style="padding-top:10px;"><select class="form-select form-select-lg mb-3" name="Backup_Display_Degree" id="Backup_Display_Degree">
+   <option selected>UG/PG</option>
+  <option value="UG">Under Graduate</option>
+  <option value="PG">Post Graduate</option>
+</select></th> </table>
+<input type="submit" style="margin-right:50px;margin-top:50px" class="btn btn-outline-primary" value="Display"></center>
+</form>
+</div>
+</body>
+<script>
+function Value(id)
+{
+if(id[0]=="G")
+{
+$("#Grad").val($("#"+id).text());
+if($("#"+id).text()=="Post Graduate(PG)")
+{
+$("#Year_li_3").hide();
+}
+else
+{
+$("#Year_li_3").show();
+}
+}
+else if(id[0]=="Y"){$("#Year").val($("#"+id).text());}
+else{$("#Dep").val($("#"+id).text());}
+}
+
+function Submit()
+{
+if($("#Grad").val()==""||$("#Year").val()==""||$("#Dep").val()=="")
+{
+  alert("Value's Cannot Be Null !");
+  $("form").attr('onsubmit','return false;');
+}
+else
+{
+  $("form").attr('onsubmit','return true;');
+}
+}
+
+function Validtions()
+{
+  if($("#Avg_Degree").val()=="UG/PG")
+  {
+    alert("Degree Cannot Be Null ! ");
+    $("#Avg_Form").attr('onsubmit','return false;');
+  }
+  else
+  {
+    $("#Avg_Form").attr('onsubmit','return true;');
+  }
+}
+
+function Backup()
+{
+  if($("#Degree").val()=="UG/PG"||$("#year").val()=="Year"
+    ||$("#Sem").val()=="Semester")
+  {
+    alert("Value's Cannot Be Null ! ");
+  }
+  else
+  {
+    Year=$("#year").val();
+    Degree=$("#Degree").val();
+    Sem=$("#Sem").val();
+    $.ajax({
+            type: "POST",        
+            url: "/Murali/Backup_Student_Data",
+            data: {
+                 year:Year,
+                 Degree:Degree,sem:Sem,
+                  csrfmiddlewaretoken:'{{ csrf_token }}'
+                },
+            success: function (result) {  
+            console.log(result);
+            alert(result);
+             }         
+       });
+  }
+}
+
+function degree()
+{
+a=$("#Degree").val();
+if(a=="PG")
+{
+$("#Backup_Text").html("<b>Even Semester Backup Should Start From II Year </b>");
+$("#III").hide();
+$("#Sem_5").hide();
+$("#Sem_6").hide();
+}
+else if(a=="UG"){
+$("#Backup_Text").html("<b>Even Semester Backup Should Start From III Year </b>");
+$("#III").show();
+$("#Sem_5").show();
+$("#Sem_6").show();
+}
+}
+
+function Semester()
+{
+  if($("#Degree").val()=="UG" && $("#year").val()=="I")
+  {
+    $("#Sem_3").hide();
+    $("#Sem_4").hide();
+    $("#Sem_5").hide();
+    $("#Sem_6").hide();
+    $("#Sem_1").show();
+    $("#Sem_2").show();
+  }
+  else if($("#Degree").val()=="UG" && $("#year").val()=="II")
+  {
+    $("#Sem_3").show();
+    $("#Sem_4").show();
+    $("#Sem_1").hide();
+    $("#Sem_2").hide();
+    $("#Sem_5").hide();
+    $("#Sem_6").hide();
+  }
+  else if ($("#Degree").val()=="UG" && $("#year").val()=="III")
+  {
+    $("#Sem_3").hide();
+    $("#Sem_4").hide();
+    $("#Sem_1").hide();
+    $("#Sem_2").hide();
+    $("#Sem_5").show();
+    $("#Sem_6").show();
+  }
+  else if($("#Degree").val()=="PG" && $("#year").val()=="I")
+  {
+    $("#Sem_3").hide();
+    $("#Sem_4").hide();
+    $("#Sem_5").hide();
+    $("#Sem_6").hide();
+    $("#Sem_1").show();
+    $("#Sem_2").show();
+  }
+  else if($("#Degree").val()=="PG" && $("#year").val()=="II")
+  {
+    $("#Sem_3").show();
+    $("#Sem_4").show();
+    $("#Sem_1").hide();
+    $("#Sem_2").hide();
+    $("#Sem_5").hide();
+    $("#Sem_6").hide();
+  }
+}
+
+
+function Year_Upgrade()
+{
+if($("#Degree").val()=="UG")
+{
+  if($("#Sem").val()=="Sem_2"||$("#Sem").val()=="Sem_4")
+  {
+    res=prompt("Have You Backuped The 3rd Year(YES/NO):");
+    if(res=="YES")
+      $("#Backup_bt").prop('disabled', false);
+    else
+      $("#Backup_bt").prop('disabled', true);
+  }
+  else
+  {
+    $("#Backup_bt").prop('disabled', false);
+  }
+}
+else
+{
+  if($("#Sem").val()=="Sem_2")
+  {
+    res=prompt("Have You Backuped The 2nd Year(YES/NO):");
+    if(res=="YES")
+      $("#Backup_bt").prop('disabled', false);
+    else
+      $("#Backup_bt").prop('disabled', true);
+  }
+  else
+  {
+    $("#Backup_bt").prop('disabled', false);
+  }
+}
+}
+</script>

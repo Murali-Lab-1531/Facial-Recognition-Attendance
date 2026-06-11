@@ -1,0 +1,198 @@
+<!--Author:Murali-->
+{% load static %} 
+<head> 
+<script src="{% static 'Js/Bootstrap_Bundle.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'Css/Data_table.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+
+<script src="{% static 'Js/Print_Data_table_1.js' %}"></script>
+<script src="{% static 'Js/Print_Buttons_2.js' %}"></script>
+<script src="{% static 'Js/Print_Jzip_3.js' %}"></script>
+<script src="{% static 'Js/Print_Pdf_4.js' %}"></script>
+<script src="{% static 'Js/Print_Fonts_5.js' %}"></script>
+<script src="{% static 'Js/Print_Html_6.js' %}"></script>
+<script src="{% static 'Js/Print_Print_7.js' %}"></script>
+<center><div style="background-color:cyan;height:100px;"><u><h1 style="color:red">Staff Info Table</h1></u></div>
+  <style type="text/css">
+    .dt-buttons {float: left;}</style>
+<table id="db_table" >
+<thead>
+<tr>
+<th>User-Name</th>
+<th>ID</th>
+<th>Name</th>
+<th>Department</th>
+<th>Phone Number</th>
+<th>Mail_ID</th>
+<th>Edit</th>
+<th>Remove</th>
+</tr>
+</thead>
+<tbody>
+{% for i in Staff_det %}
+<tr id={{i.Staff_ID}}>
+<td>{{i.User_Name}}</td>
+<td>{{i.Staff_ID}}</td>
+<td>{{i.Name}}</td>
+<td>{{i.Department}}</td>
+<td>{{i.Phone_Number}}</td>
+<td>{{i.Mail_ID}}</td>
+<td>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="edit()" data-bs-target="#EditModal">
+    Edit
+  </button>
+</td>
+<td><button id={{i.User_Name}} name={{i.Staff_ID}} onclick="delete_record(this.id,this.name)" type="button" class="btn btn-danger">Remove</button></td>
+</tr>
+{%endfor%}
+</tbody>
+<tbody id="tbody">
+</tbody>
+</table>
+<br>
+<br>
+</center>
+<script>
+$(document).ready(function() {
+    $('#db_table').DataTable( {     
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',className: 'btn btn-primary glyphicon glyphicon-file',
+                title: "Staff Informations",
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5 ]
+                }
+            },
+            'colvis'
+        ]
+    } );
+} );
+</script>
+<head> 
+</head>
+<div class="container mt-3">
+  <a href="/Murali/add_Staff"><button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#myModal">
+    Add Staff</button></a>
+  <a href="/Murali/back_to_admin"><button type="button" class="btn btn-secondary btn-lg" >Back</button></a>
+</div>
+<!--EDIT-MODAL-->
+<div class="modal" id='EditModal' tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:green;">Edit Staff Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+             <div class="modal-body">
+        <div class="mb-3">
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Name:</label>
+  <div class="col-sm-10">
+  <input type="hidden" class="form-control form-control-lg" name="Staff_ID" id="User-name">
+  <input type="hidden" class="form-control form-control-lg" name="Staff_ID" id="ID">
+    <input type="text" class="form-control" name="Staff_Name" id="Editname" placeholder="Name">
+  </div>
+</div>
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Major:</label>
+  <div class="col-sm-10">
+   <select class="form-select"  name="Staff_Dep" id="Editdep">
+        <option selected>Select your Department</option>
+        <option value="Computer Science">Computer Science </option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Chemistry">Chemistry </option>
+        <option value="Physics">Physics</option>
+        <option value="Economics">Economics</option>
+      </select>
+  </div>
+</div>
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Number:</label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control" name="Staff_Phone" id="Editphone" placeholder=" Department" maxlength="10">
+  </div>
+</div>
+<div class="row">
+  <label for="colFormLabelLg" class="col-sm-2 col-form-label"> Mail:</label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control form-control-lg" name="Staff_Mail" id="Editmail" placeholder="Mail ID">
+  </div> 
+</div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"data-bs-dismiss="modal"
+         onclick="save()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function edit()
+{
+var table = $('#db_table').DataTable();
+
+$('tbody').on( 'click', 'tr', function () {
+    $("#User-name").val(table.row( this ).data()[0]);
+    $("#ID").val(table.row( this ).data()[1]);
+    $("#Editname").val(table.row( this ).data()[2]);
+    $("#Editdep").val(table.row( this ).data()[3]);
+    $("#Editphone").val(table.row( this ).data()[4]);
+    $("#Editmail").val(table.row( this ).data()[5]);     
+} );
+}
+
+function delete_record(usr,id)
+{
+ $.ajax({
+            type: "POST",
+            url: "/Murali/remove_Staff",
+            data:{usr_name:usr,csrfmiddlewaretoken:'{{ csrf_token }}'},
+            success:function (result) {
+                alert(result);
+                console.log(result);
+                var table = $('#db_table').DataTable();
+    		 table.row("#"+id).remove().draw(false);
+                }           
+       });
+}
+
+function save()
+{
+ var table = $('#db_table').DataTable();
+ name = $("#Editname").val();
+ Department = $("#Editdep").val();
+ phone=$("#Editphone").val();
+ mail = $("#Editmail").val();
+ id=$("#ID").val();
+ username=$("#User-name").val();
+ data={0:username,1:id,2:name,3:Department,4:phone,
+ 5:mail,6:'<button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="edit()" data-bs-target="#EditModal">Edit</button>',
+ 7:'<button id=id onclick="delete_record(this.id)" type="button" class="btn btn-danger">Remove</button>'}              
+ $.ajax({
+            type: "POST",        
+            url: "/Murali/update_Staff",
+            data: {
+                  tsid:id,
+                  usr_name:username,
+                  tsname:name,
+                  tsdep:Department,
+                  tsmail:mail,              
+                  tsphone:phone,
+                  csrfmiddlewaretoken:'{{ csrf_token }}'
+                },
+            success: function (result) {  
+            table.row('#'+id).data(data);//ifupdate                      
+            console.log(result);
+            alert(result);
+             }         
+       });
+       
+}
+</script>
+

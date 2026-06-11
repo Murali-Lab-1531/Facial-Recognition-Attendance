@@ -1,0 +1,207 @@
+
+<!--Author:Murali-->
+{% load static %}
+<head>
+<link href="{% static 'Css/Boot_css.css' %}"rel="stylesheet">
+<script src="{% static 'Js/Boot_1_js.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+<script src="{% static 'Js/Data_table_js.js' %}"></script> 
+<link href="{% static 'Css/Data_table.css' %}" rel="stylesheet">
+<script src="{% static 'Js/Print_Data_table_1.js' %}"></script>
+<script src="{% static 'Js/Print_Buttons_2.js' %}"></script>
+<script src="{% static 'Js/Print_Jzip_3.js' %}"></script>
+<script src="{% static 'Js/Print_Pdf_4.js' %}"></script>
+<script src="{% static 'Js/Print_Fonts_5.js' %}"></script>
+<script src="{% static 'Js/Print_Html_6.js' %}"></script>
+<script src="{% static 'Js/Print_Print_7.js' %}"></script>
+  <style type="text/css">
+    .dt-buttons {float: left;}</style>
+</head>
+<center><div style="background-color:cyan;height:100px;"><u><h1 style="color:red">Students Info Table</h1></u>
+<p style="font-weight:bold">Degree:<span style="font-weight:normal;color:#696969">{{Grad}}</span>&emsp;Year:<span style="font-weight:normal;color:#696969">{{Year}}</span>&emsp;Department:<span style="font-weight:normal;color:#696969">{{Dep}}</span></p></div>
+<input type="hidden"  name="Student_Usr" id="User-name">
+<table id="db_table" >
+<thead>
+<tr>
+<th>User_Name</th>
+<th>Regno</th>
+<th>Name</th>
+<th>DOB</th>
+<th>Gender</th>
+<th>Phone_NO</th>
+<th>Mail_ID</th>
+<th>Edit</th>
+<th>Remove</th>
+</tr>
+</thead>
+<tbody>
+{% for i in Student_det %}
+<tr id={{i.Regno}}>
+<td>{{i.User_Name}}</td>
+<td>{{i.Regno}}</td>
+<td>{{i.Name}}</td>
+<td>{{i.DOB|date:'Y-m-d'}}</td>
+<td>{{i.Gender}}</td>
+<td>{{i.Phone_Number}}</td>
+<td>{{i.Mail_ID}}</td>
+<td>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="edit()" data-bs-target="#EditModal">
+    Edit
+  </button>
+</td>
+<td><button id={{i.User_Name}} name={{i.Regno}} value={{Grad}} onclick="delete_record(this.id,this.name,this.value)" type="button" class="btn btn-danger">Remove</button></td>
+</tr>
+{%endfor%}
+</tbody>
+</table>
+<br>
+<br>
+</center>
+<script>
+$(document).ready(function() {
+    $('#db_table').DataTable( {     
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',className: 'btn btn-primary glyphicon glyphicon-file',
+                title: "Student Informations", 
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5,6]
+                }
+            },
+            'colvis'
+        ]
+    } );
+} );
+</script>
+<div class="container mt-3">
+  <a href="/Murali/add_Student"><button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#myModal">
+    Add Student</button></a>
+    <a href="/Murali/Admin_Edit_Attendance?degree={{Grad}}&year={{Year}}&dep={{Dep}}"><button type="button" class="btn btn-primary btn-lg">Edit Attendance</button></a>
+  <a href="/Murali/back_to_admin"><button type="button" class="btn btn-secondary btn-lg" >Back</button></a>
+</div>
+<!--EDIT-MODAL-->
+<div class="modal" id='EditModal' tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:green;">Edit Student Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+             <div class="modal-body">
+        <div class="mb-3">
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Name:</label>
+  <div class="col-sm-10">
+
+  <input type="hidden" class="form-control form-control-lg" name="Student_ID" id="ID">
+    <input type="text" class="form-control" name="Student_Name" id="Editname" placeholder="Name">
+  </div>
+</div>
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">DOB:</label>
+  <div class="col-sm-10">
+    <input type="date" class="form-control" name="Student_Name" id="Editdob">
+  </div>
+</div>
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Gender:</label>
+  <div class="col-sm-10">
+   <select class="form-select"  name="Student_Gen" id="Editgen">
+        <option selected>Select your Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+  </div>
+</div> 
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Number:</label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control" name="Staff_Phone" id="Editphone" placeholder=" Department" maxlength="10">
+  </div>
+</div>
+<div class="row">
+  <label for="colFormLabelLg" class="col-sm-2 col-form-label"> Mail:</label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control form-control-lg" name="Staff_Mail" id="Editmail" placeholder="Mail ID">
+  </div> 
+</div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"data-bs-dismiss="modal"
+         onclick="save()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function edit()
+{
+var table = $('#db_table').DataTable();
+
+$('tbody').on( 'click', 'tr', function () {
+    $("#User-name").val(table.row(this).data()[0]);
+    $("#ID").val(table.row(this).data()[1]);   
+    $("#Editname").val(table.row(this).data()[2]);
+    $("#Editdob").val(table.row(this).data()[3]);
+    $("#Editgen").val(table.row(this).data()[4]);
+    $("#Editphone").val(table.row(this).data()[5]);
+    $("#Editmail").val(table.row(this).data()[6]);   
+} );
+}
+
+function delete_record(usr,regno,deg)
+{
+ $.ajax({
+            type: "POST",
+            url: "/Murali/remove_Student",
+            data:{usr_name:usr,degree:deg,Regno:regno,csrfmiddlewaretoken:'{{ csrf_token }}'},
+            success:function (result) {
+                alert(result);
+                console.log(result);
+                var table = $('#db_table').DataTable();
+    		 table.row("#"+regno).remove().draw(false);
+                }           
+       });
+}
+
+function save()
+{
+ var table = $('#db_table').DataTable();
+ name = $("#Editname").val();
+ DOB = $("#Editdob").val();
+ gen=$("#Editgen").val();
+ phone=$("#Editphone").val();
+ mail = $("#Editmail").val();
+ regno=$("#ID").val();
+ username=$("#User-name").val();
+ grad=$("#"+username).val();
+ data={0:username,1:regno,2:name,3:DOB,4:gen,5:phone,
+ 6:mail,7:'<button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="edit()" data-bs-target="#EditModal">Edit</button>',
+ 8:'<button id=id onclick="delete_record(this.id)" type="button" class="btn btn-danger">Remove</button>'}           
+ $.ajax({
+            type: "POST",        
+            url: "/Murali/update_Student",
+            data: {
+                  streg:regno,
+                  usr_name:username,
+                  Grad:grad,
+                  stname:name,
+                  stDOB:DOB,
+                  stgen:gen,
+                  stmail:mail,              
+                  stphone:phone,
+                  csrfmiddlewaretoken:'{{ csrf_token }}'
+                },
+            success: function (result) {                        
+            table.row('#' + regno).data(data); //if update
+            console.log(result);
+            alert(result);
+             }         
+       });       
+}
+</script>
+

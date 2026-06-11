@@ -1,0 +1,142 @@
+	<!--Author:Murali-->
+	{% load static %}
+	<head>
+	<link href="{% static 'Css/Boot_css.css' %}"rel="stylesheet">
+	<script src="{% static 'Js/Boot_1_js.js' %}"></script>
+	<script src="{% static 'Js/Jquery.js' %}"></script>
+	<script src="{% static 'Js/Data_table_js.js' %}"></script> 
+	<link href="{% static 'Css/Data_table.css' %}" rel="stylesheet">
+	<script src="{% static 'Js/Print_Data_table_1.js' %}"></script>
+<script src="{% static 'Js/Print_Buttons_2.js' %}"></script>
+<script src="{% static 'Js/Print_Jzip_3.js' %}"></script>
+<script src="{% static 'Js/Print_Pdf_4.js' %}"></script>
+<script src="{% static 'Js/Print_Fonts_5.js' %}"></script>
+<script src="{% static 'Js/Print_Html_6.js' %}"></script>
+<script src="{% static 'Js/Print_Print_7.js' %}"></script>
+  <style type="text/css">
+    .dt-buttons {float: left;}</style>
+	</script>
+	</head>
+	<script src="https://cdn.datatables.net/select/1.6.1/js/dataTables.select.min.js"></script>
+	<center><div style="background-color:cyan;height:100px;"><u><h1 style="color:red">Student's Consolidated Attendance</h1></u>
+	<p style="font-weight:bold">Degree:<span style="font-weight:normal;color:grey;"><b>{{Degree}}</b></span>&nbsp;&nbsp;&nbsp;<span style="font-weight:bold" >Average Precentage:&nbsp;&nbsp;&nbsp;<input type="Number" id="Avg_Att" class="form-control" style="width:100px;display:inline-block;" min="1" max="100" onblur="Sort()"></span>&nbsp;&nbsp;&nbsp;<span style="font-weight:bold">Sent Mail:&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Avg_Mail()">Sent</button></span></p>
+	</div>
+	<input type="hidden" name="Mail_list" id="Mail_list">
+	<input type="hidden" name="Degree" value="{{Degree}}" id="Degree">
+	<table id="db_table" class="display" >
+	<thead>
+	<tr>
+	<th>Regno</th>
+	<th>Name</th>
+	<th>Department</th>
+	<th>Year</th>
+	<th>Mail_ID</th>
+	<th>Attendance</th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for i in Student_det %}
+	<tr id={{i.Regno}}>
+	<td>{{i.Regno}}</td>
+	<td>{{i.Name}}</td>
+	<td>{{i.Department}}</td>
+	<td>{{i.Year}}</td>
+	<td>{{i.Mail_ID}}</td>
+	<td>{{i.Attendance}}</td>
+	{%endfor%}
+	</tbody>
+	</table>
+	<br>
+	<br>
+	 <a href="/Murali/back_to_admin"><button type="button" class="btn btn-secondary btn-lg" >Back</button></a>
+	</center>
+	<script>
+	$(document).ready(function() {
+    $('#db_table').DataTable( {     
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',className: 'btn btn-primary glyphicon glyphicon-file',
+                title: "Student's Consolidated Attendance",
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5 ]
+                }
+            },
+            'colvis'
+        ]
+    } );
+} );
+
+ function Sort() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("Avg_Att");
+  attendance = parseFloat(input.value);
+  if (attendance>0) 
+  {
+  //filter = input.value.toUpperCase();
+  table = document.getElementById("db_table");
+  tr = table.getElementsByTagName("tr");
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 1; i < tr.length; i++) 
+  {
+    td = tr[i].getElementsByTagName("td")[5];//table data [1] - column number - starts from 0
+    if (td)
+     {
+      txtValue = td.textContent || td.innerText;
+      //if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	if(parseFloat(txtValue)<=attendance)
+	{
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+ }
+ else
+ {		
+   table = document.getElementById("db_table");
+  tr = table.getElementsByTagName("tr");
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 1; i < tr.length; i++) 
+  {
+    td = tr[i].getElementsByTagName("td")[5];//table data [1] - column number - starts from 0
+    if (td)
+     {
+      txtValue = td.textContent || td.innerText;
+      //if (txtValue.toUpperCase().indexOf(filter) > -1) 
+      tr[i].style.display = "";
+    }
+  }
+ }
+}
+
+function Avg_Mail()
+{
+  table = document.getElementById("db_table");
+  tr = table.getElementsByTagName("tr");
+  $("#Mail_list").val("");
+  for (i = 1; i < tr.length; i++) 
+  {
+  if ($(tr[i]).css('display') != 'none')
+   {
+    document.getElementById('Mail_list').value+=$(tr[i]).attr('id');		
+   }
+  }
+  Avg_list=$("#Mail_list").val();
+  Degree=$("#Degree").val();
+  $.ajax({
+            type: "POST",        
+            url: "/Murali/Caution_Mail",
+            data: {
+                  Avg_list:Avg_list,
+                  Degree:Degree,
+                  csrfmiddlewaretoken:'{{ csrf_token }}'
+                },
+            success: function (result) {                        
+            console.log(result);
+            alert(result);
+             }         
+       });
+}
+</script>

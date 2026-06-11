@@ -1,0 +1,88 @@
+<!--Author:Murali-->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link href="{% static 'Css/Boot_css.css' %}"rel="stylesheet">
+<script src="{% static 'Js/Boot_1_js.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+	<title>Student_Home_Page</title>
+</head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+<body style="background-color:cyan;">
+  <p style="padding: 20px; position: absolute;top: 10px; left: 1150px;">
+ <a href="/Murali/logout"> <input type="button" class="btn btn-danger" value="Sign out"></a></p>
+ <center>
+<div style="height:100px;"><u><h1 style="color:red">S.VEERASAMY CHETTIAR COLLEGE</h1></u>
+<p style="font-weight:bold;font-size:20px;">Date:<span style="font-weight:normal;color:black;"><b>&emsp;{{Date}}</b></span>&emsp;No.of Working Days:<span style="font-weight:normal;color:black;">&emsp;<b>{{Days}}</b></span></p></div>
+<!--Students Details-->
+<div style="width:1250px ;">
+<div class="input-group input-group-lg" >
+  <span class="input-group-text" >Register No:</span>
+  <input style="color:red;" type="text" class="form-control" value="{{Student_det.Regno}}" readonly >
+  <span class="input-group-text" >Name:</span>
+  <input style="color:red;" type="text" class="form-control" value="{{Student_det.Name}}" readonly>
+  <span class="input-group-text">Degree:</span>
+  <input style="color:red;" type="text" class="form-control"value="{{Student_det.Degree}}" readonly>
+  <span class="input-group-text">Course:</span>
+  <input style="color:red;" type="text" class="form-control"value="{{Student_det.Department}}" readonly>
+</div></div>
+<br>
+<br>
+<br>
+<!--Student Attendance Table-->
+<table style="width: 800px;" >
+<tr>
+	<th>Date</th>
+	<th>1 Hr</th>
+	<th>2 Hr</th>
+	<th>3 Hr</th>
+	<th>4 Hr</th>
+	<th>5 Hr</th>
+</tr>
+{% if Attendance %}
+{% for i in Attendance %}
+<tr id={{i.Regno}}>
+<td>{{i.Date}}</td>
+<td>{{i.HR_1}}</td>
+<td>{{i.HR_2}}</td>
+<td>{{i.HR_3}}</td>
+<td>{{i.HR_4}}</td>
+<td>{{i.HR_5}}</td>
+</tr>
+{%endfor%}	
+{% else %}
+<tr><th colspan="6"><center>NO ABSENT HISTORY</center></th></tr>
+{% endif%}
+</table>
+<br>
+<br>
+<br>	
+<table style="width: 800px;">
+<tr><th>Medical leave:</th><th>{{ML}}</th></tr>
+<tr><th>On Duty:</th><th>{{OD}}</th></tr>
+<tr><th>Absent:</th><th>{{Absent_Days}}</th></tr>
+<tr><th>Total Leave:</th><th>{{Absent_Days}}</th></tr>
+<tr><th>Attendance:</th><th>{{Attendance_Average}}</th></tr>
+</tr>
+</table>							
+</center>
+</body>
+</html>
+

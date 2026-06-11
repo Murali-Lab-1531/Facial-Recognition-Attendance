@@ -1,0 +1,179 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body{
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(9,9,121,0.8)), url(/static/Images/Entry_Background.jpg) !important;
+    height: 100vh !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.container .main-content{
+    display: flex;
+    background: #fff;
+    margin: 10px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 5px;
+}
+.container header .head-title #title{
+    color: #fff;
+    text-align: center;
+    margin: 10px;
+    padding: 100px 20px 0 20px;
+    font-size: 35px;
+    font-weight: 700;
+}
+.container header .head-title #description{
+    color: #fff;
+    text-align: center;
+    margin: 10px;
+    padding: 0 20px 0 20px;
+    font-size: 20px;
+    font-weight: 500;
+    font-style: italic;
+}
+.container .end-content{
+    text-align: center;
+    margin: 10px;
+    padding: 20px;
+}
+.container .end-content .creator{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+#survey-form .user-details .form-content{
+    padding-bottom: 10px;
+}
+#survey-form .user-details .form-content .details{
+    font-size: 25px;
+    font-weight: 500;
+}
+#survey-form .user-details .text-form input{
+    height: 45px;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    outline: 0;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+#survey-form .user-details .text-form input:focus,
+#survey-form .user-details .text-form input:valid{
+    border-bottom-color: rgba(9,9,121,0.8);
+}
+#survey-form .user-details .form-content #dropdown{
+    height: 45px;
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: #fff;
+    outline: 0;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+}
+#survey-form .user-details .form-content #your-selection{
+    height: 45px;
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: #fff;
+    outline: 0;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+}
+#survey-form .user-details .form-content #dropdown:focus,
+#survey-form .user-details .form-content #dropdown:valid{
+    border-bottom-color: rgba(9,9,121,0.8);
+}
+#survey-form .user-details .form-content #your-selection:focus,
+#survey-form .user-details .form-content #your-selection:valid{
+    border-bottom-color: rgba(9,9,121,0.8);
+}
+.user-details .selection-form{
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-weight: 500;
+}
+#survey-form .user-details .form-content .details .multiple{
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+}
+.user-details .selection-form #comments-in{
+    padding: 2px 5px 0 15px;
+    font-size: 18px;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    border-color: #ccc;
+    border-radius: 5px;
+}
+.user-details .selection-form textarea:focus,
+.user-details .selection-form textarea:valid{
+    outline: none !important; 
+    border-bottom-color: rgba(9,9,121,0.8) !important;
+}
+.user-details .selection-form textarea::selection{
+    background: rgba(9,9,121,0.8) !important;
+}
+#survey-form .user-details .form-content #submit{
+    height: 45px;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    border-radius: 5px;
+    background: linear-gradient(135deg, rgba(9,9,121,0.8) 0%, #15a7e0 100%);
+    color: #fff;
+}
+.container .end-content{
+    height: 45px;
+    width: 100%;
+    padding-left: 15px;
+    padding-bottom: 50px;
+    padding-right: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+}
+a:link {
+    color: #8ab4f8;
+}
+a:visited {
+  color: rgb(46, 155, 228);
+}
+
+@media only screen and (max-width: 532px) {
+    .container .end-content .creator{
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+    }
+  }

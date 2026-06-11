@@ -1,0 +1,79 @@
+<!--Author:Murali-->
+{% load static %} 
+<head> 
+<script src="{% static 'Js/Bootstrap_Bundle.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+<link rel="stylesheet" href="{% static 'Css/Data_table.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+<script src="{% static 'Js/Print_Data_table_1.js' %}"></script>
+<script src="{% static 'Js/Print_Buttons_2.js' %}"></script>
+<script src="{% static 'Js/Print_Jzip_3.js' %}"></script>
+<script src="{% static 'Js/Print_Pdf_4.js' %}"></script>
+<script src="{% static 'Js/Print_Fonts_5.js' %}"></script>
+<script src="{% static 'Js/Print_Html_6.js' %}"></script>
+<script src="{% static 'Js/Print_Print_7.js' %}"></script>
+<center><div style="background-color:cyan;height:100px;"><u><h1 style="color:red">Students Backup Details</h1></u>
+    <p style="font-weight:bold">Degree:<span style="font-weight:normal;color:#696969">{{Degree}}</span></p>
+</div>
+  <style type="text/css">
+    .dt-buttons {float: left;}</style>
+<table id="db_table" class="cell-border" border="3">
+<thead>
+<tr>
+<th rowspan="2">Regno</th>
+<th rowspan="2">Name</th>
+<th rowspan="2">Degree</th>
+<th rowspan="2">Phone Number</th>
+<th colspan="6"><center> Attendance</center></th>
+</tr>
+<tr>
+<th>SEM_1</th>
+<th>SEM_2</th>
+<th>SEM_3</th>
+<th>SEM_4</th>
+{% if Degree == "UG"%}
+<th>SEM_5</th>
+<th>SEM_6</th>
+{% endif %}
+</tr>
+</thead>
+<tbody>
+{% for i in Backup_Details %}
+<tr>
+<td>{{i.Regno}}</td>
+<td>{{i.Name}}</td>
+<td>{{i.Degree}}</td>
+<td>{{i.Phone_Number}}</td>
+<td>{{i.Attendance.Sem_1}}</td>
+<td>{{i.Attendance.Sem_2}}</td>
+<td>{{i.Attendance.Sem_3}}</td>
+<td>{{i.Attendance.Sem_4}}</td>
+{% if Degree == "UG" %}
+<td>{{i.Attendance.Sem_5}}</td>
+<td>{{i.Attendance.Sem_6}}</td>
+</tr>
+{% endif %}
+{%endfor%}
+</tbody>
+</table>
+<br>
+<br>
+<a href="/Murali/back_to_admin"><button type="button" class="btn btn-secondary btn-lg" >Back</button></a>
+</center>
+<script>
+$(document).ready(function() {
+    $('#db_table').DataTable( {     
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',className: 'btn btn-primary glyphicon glyphicon-file',
+                title: "Staff Informations",
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5 ]
+                }
+            },
+            'colvis'
+        ]
+    } );
+} );
+</script>

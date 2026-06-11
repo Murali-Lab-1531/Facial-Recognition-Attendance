@@ -1,0 +1,19 @@
+  conn = mysql.connector.connect(host="localhost",user="root",password="murali1531",database="murali" )
+                cursor= conn.cursor()
+                query = "select * from student_details"
+                cursor.execute(query)
+                # Fetch all rows from the result
+                records = cursor.fetchall()
+                # Print row by row
+                for row in records: 
+                    print("User_Name:", row[0])
+                    print("Regno  :", row[1])
+                    print("Name :", row[2])
+                    print("DOB :", row[3])
+                    print("Gender :", row[4])
+                    print("Degree :", row[2])
+                    print("Year:", row[3])
+                    print("Department :", row[4])
+                    print("-" * 30)
+                cursor.close()
+                conn.close()

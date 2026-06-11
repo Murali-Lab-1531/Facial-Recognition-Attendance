@@ -1,0 +1,105 @@
+<!--Author:Murali-->
+{% load static %} 
+<head> 
+<script src="{% static 'Js/Bootstrap_Bundle.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+<link rel="stylesheet" href="{% static 'Css/Data_table.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+<script src="{% static 'Js/Bootstrap_Bundle.js' %}"></script>
+<script src="{% static 'Js/Jquery.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'Css/Data_table.css' %}" media="screen" type="text/css">
+<link rel="stylesheet" href="{% static 'Css/Boot_css.css' %}" media="screen" type="text/css">
+
+<script src="{% static 'Js/Print_Data_table_1.js' %}"></script>
+<script src="{% static 'Js/Print_Buttons_2.js' %}"></script>
+<script src="{% static 'Js/Print_Jzip_3.js' %}"></script>
+<script src="{% static 'Js/Print_Pdf_4.js' %}"></script>
+<script src="{% static 'Js/Print_Fonts_5.js' %}"></script>
+<script src="{% static 'Js/Print_Html_6.js' %}"></script>
+<script src="{% static 'Js/Print_Print_7.js' %}"></script>
+</head>
+<body >
+	<form action="/Murali/Staff_Save_Attendance" method="POST">{% csrf_token %}
+<center><u><h1 style="color:red"><b>Student Attendance Page</b></h1></u>
+	<p style="font-weight:bold">Degree:<span style="font-weight:normal;color:red"><b>{{Degree}}</b></span> Year:<span style="font-weight:normal;color:red"><b>{{Year}}</b></span> &nbsp;Department:<span style="font-weight:normal;color:red"><b>{{department}}</b></span>&nbsp;&nbsp;Date:<span style="font-weight:normal;color:red"><b>{{Date}}</b></span>&nbsp;&nbsp;Hour:<span style="font-weight:normal;color:red"><b>{{Hour}}</b></span></p>
+	<input type="hidden" name="Degree" value="{{Degree}}">
+	<input type="hidden" name="Year" value="{{Year}}">
+	<input type="hidden" name="Department" value="{{department}}">
+	<input type="hidden" name="Hour" value="{{Hour}}">
+	<input type="hidden" name="Date" value="{{Date}}">
+	<input type="hidden" id="Choice" name="Choice" value="{{Choice}}">
+	<input type="hidden" name="Absent_Student" id="Absent_Student">
+<table id="db_table">
+<thead>
+<tr>
+<th>Registor Number</th>
+<th>Name</th>
+<th>Attendance</th>
+</tr>
+</thead>
+<tbody>
+{% for i in Student_det %}
+<tr id={{i.Regno}}>
+<td><b>{{i.Regno}}</b></td>
+<td><b>{{i.Name}}</b></td>
+{% if i.Edit_Att == "AB"%}
+<td><div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="{{i.Regno}}" name="{{i.Regno}}" onclick="Attendance(this.id)"> 
+</div>
+</td>
+{% else %}
+<td><div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="{{i.Regno}}" name="{{i.Regno}}" onclick="Attendance(this.id)" checked> 
+</div>
+</td>
+{% endif %}
+</tr>
+{%endfor%}
+</tbody>		
+</table>
+<br>
+<br>
+<div><button type="Submit" class="btn btn-outline-primary" id="Mark_BT" onclick="Alert()">
+Mark Attendance</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="Submit" class="btn btn-outline-secondary" id="Edit_BT"  
+onclick="Alert()">Edit Attendance</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-outline-dark"><a href="/Murali/back_to_Staff">Back</a></button></div>
+</center>
+</form>
+</body>
+<script>
+$(function() {
+$("#db_table").DataTable();
+});
+
+function Attendance(x)
+{
+	if($("#Absent_Student").val().search(x)=="-1")
+	{
+	document.getElementById('Absent_Student').value+=x;		
+	}
+	else
+	{
+		sec=$("#Absent_Student").val().search(x);
+		var fid = $("#Absent_Student").val();
+		Del_Item=fid.substring(sec,sec+8);
+		var newStr = fid.replace(Del_Item,"");
+		$("#Absent_Student").val(newStr);	
+	} 
+}
+
+$( document ).ready(function() {
+	if($("#Choice").val()=="Mark")
+		$('#Edit_BT').prop('disabled', true);
+	else
+		$('#Mark_BT').prop('disabled', true);
+});
+
+function Alert()
+{
+	alert("Attendance Marked !");
+}
+</script>
